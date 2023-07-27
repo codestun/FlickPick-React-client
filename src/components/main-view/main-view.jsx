@@ -9,7 +9,6 @@ export const MainView = () => {
       Title: "Once",
       Year: "2007",
       Description: "A musical drama about a Dublin street musician and a Czech immigrant who form an unlikely bond through their shared love of music.",
-      Director: "John Carney",
       Genre: {
         Name: "Musical, Drama, Romance",
         Description: "Blends heartfelt musical performances with a touching story of love, dreams, and the power of music."
@@ -40,7 +39,7 @@ export const MainView = () => {
         DeathYear: null,
         Movies: ["This Is Spinal Tap"]
       },
-      ImagePath: "WIP",
+      ImagePath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmNxVu_dcfC0Wmr3jLCD2Thgg_lCFypVTZcUNmbvp-slkv6k_w2J29kTH14T4lioy5paM&usqp=CAU",
       Featured: false
     },
     {
@@ -78,7 +77,7 @@ export const MainView = () => {
         DeathYear: null,
         Movies: ["This Is Spinal Tap"]
       },
-      ImagePath: "WIP",
+      ImagePath: "https://www.filmonpaper.com/wp-content/uploads/2011/10/StopMakingSense_onesheet_USA-1-500x758.jpg",
       Featured: false
     },
     {
@@ -105,8 +104,11 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   if (selectedMovie) {
-    return <MovieView movie={selectedMovie} />;
+    return (
+      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+    );
   }
+
   if (movies.length === 0) {
     return <div>The list is empty!</div>;
   }

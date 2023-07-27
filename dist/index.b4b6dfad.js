@@ -27307,55 +27307,153 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MainView", ()=>MainView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
+var _movieCard = require("../movie-card/movie-card");
+var _movieView = require("../movie-view/movie-view");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
     const [movies, setMovies] = (0, _react.useState)([
         {
             id: 1,
-            title: "Once"
+            Title: "Once",
+            Year: "2007",
+            Description: "A musical drama about a Dublin street musician and a Czech immigrant who form an unlikely bond through their shared love of music.",
+            Genre: {
+                Name: "Musical, Drama, Romance",
+                Description: "Blends heartfelt musical performances with a touching story of love, dreams, and the power of music."
+            },
+            Director: {
+                Name: "John Carney",
+                Bio: "John Carney is an Irish filmmaker known for his work in the music genre, including directing 'Once' and 'Sing Street.'",
+                BirthYear: 1972,
+                DeathYear: null,
+                Movies: [
+                    "Once"
+                ]
+            },
+            ImagePath: "https://images.moviesanywhere.com/5ba51ace17be67d6d9018312efef29ad/8ad4f1c6-01dd-47a5-bee1-85d444fadfa1.webp?h=375&resize=fit&w=250",
+            Featured: true
         },
         {
             id: 2,
-            title: "This Is Spinal Tap"
+            Title: "This Is Spinal Tap",
+            Year: "1984",
+            Description: "A mockumentary that satirizes the rock music industry, following the fictional British rock band Spinal Tap on their disastrous tour.",
+            Genre: {
+                Name: "Mockumentary, Comedy",
+                Description: "Blends documentary-style filmmaking with comedic elements, offering a humorous critique of the music industry."
+            },
+            Director: {
+                Name: "Rob Reiner",
+                Bio: "Rob Reiner is an American actor, comedian, and filmmaker known for directing 'This Is Spinal Tap' as well as other notable films, including 'Stand by Me' and 'The Princess Bride.'",
+                BirthYear: 1947,
+                DeathYear: null,
+                Movies: [
+                    "This Is Spinal Tap"
+                ]
+            },
+            ImagePath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmNxVu_dcfC0Wmr3jLCD2Thgg_lCFypVTZcUNmbvp-slkv6k_w2J29kTH14T4lioy5paM&usqp=CAU",
+            Featured: false
         },
         {
             id: 3,
-            title: "The Last Waltz"
+            Title: "The Last Waltz",
+            Year: "1978",
+            Description: "A legendary farewell concert by The Band featuring various guest artists.",
+            Genre: {
+                Name: "Rock, Documentary",
+                Description: "Combines elements of rock music and documentary filmmaking to capture the essence of the concert."
+            },
+            Director: {
+                Name: "Martin Scorsese",
+                Bio: "Martin Scorsese is an acclaimed American filmmaker known for his contributions to the film industry. He has directed numerous iconic films, including 'Taxi Driver,' 'Goodfellas,' and 'The Departed.'",
+                BirthYear: 1942,
+                DeathYear: null,
+                Movies: [
+                    "The Last Waltz",
+                    "Shine a Light"
+                ]
+            },
+            ImagePath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaRLnkXKaZxBn6pV_aLbQqqasptxOZC6EetnGHCvTQTa-t1cSmrvZhBaaypcVsbkO4caE&usqp=CAU",
+            Featured: true
         },
         {
             id: 4,
-            title: "Stop Making Sense"
+            Title: "Stop Making Sense",
+            Year: "1984",
+            Description: "The famous music festival held in 1969, capturing the spirit of the counterculture movement.",
+            Genre: {
+                Name: "Mockumentary, Comedy",
+                Description: "Blends documentary-style filmmaking with comedic elements, offering a humorous critique of the music industry."
+            },
+            Director: {
+                Name: "Rob Reiner",
+                Bio: "Rob Reiner is an American actor, comedian, and filmmaker known for directing 'This Is Spinal Tap' as well as other notable films, including 'Stand by Me' and 'The Princess Bride.'",
+                BirthYear: 1947,
+                DeathYear: null,
+                Movies: [
+                    "This Is Spinal Tap"
+                ]
+            },
+            ImagePath: "https://www.filmonpaper.com/wp-content/uploads/2011/10/StopMakingSense_onesheet_USA-1-500x758.jpg",
+            Featured: false
         },
         {
             id: 5,
-            title: "Woodstock"
+            Title: "Woodstock",
+            Year: "1970",
+            Description: "An iconic live performance by Talking Heads, known for its innovative staging and energetic performances.",
+            Genre: {
+                Name: "Documentary, Music",
+                Description: "Combines the documentary format with live music performances, providing a comprehensive experience of the festival."
+            },
+            Director: {
+                Name: "Michael Wadleigh",
+                Bio: "Michael Wadleigh is an American filmmaker best known for directing the documentary film 'Woodstock,' which documented the iconic music festival.",
+                BirthYear: 1942,
+                DeathYear: null,
+                Movies: [
+                    "Woodstock"
+                ]
+            },
+            ImagePath: "https://images.moviesanywhere.com/cdf5f1c926839b792d61b01827117487/c4d26fe8-cfe4-4658-b445-c9ceb26a204e.webp?h=375&resize=fit&w=250",
+            Featured: true
         }
     ]);
+    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
+        movie: selectedMovie,
+        onBackClick: ()=>setSelectedMovie(null)
+    }, void 0, false, {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 108,
+        columnNumber: 7
+    }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 13,
+        lineNumber: 113,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: movies.map((movie)=>{
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: movie.title
+        children: movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
+                movie: movie,
+                onClick: ()=>{
+                    setSelectedMovie(movie);
+                }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 19,
-                columnNumber: 16
-            }, undefined);
-        })
+                lineNumber: 119,
+                columnNumber: 9
+            }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 17,
+        lineNumber: 117,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "zAHol58qEFnSEkSjH0BmudsM62I=");
+_s(MainView, "3WZLw+GXLcz6CT0UNtefTHORJZM=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27365,7 +27463,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"lMrqM","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"a0jfs"}],"lMrqM":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"lMrqM","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"a0jfs","../movie-view/movie-view":"ggaUx","../movie-card/movie-card":"bwuIu"}],"lMrqM":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -27395,6 +27493,305 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["2wduJ","6x7iY","d8Dch"], "d8Dch", "parcelRequireba7b")
+},{}],"ggaUx":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$e9f6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$e9f6.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MovieView", ()=>MovieView);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const MovieView = ({ movie, onBackClick })=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                    src: movie.ImagePath,
+                    alt: movie.Title
+                }, void 0, false, {
+                    fileName: "src/components/movie-view/movie-view.jsx",
+                    lineNumber: 5,
+                    columnNumber: 9
+                }, undefined)
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 4,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                        children: movie.Title
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 8,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                children: "Year: "
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 10,
+                                columnNumber: 11
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                children: movie.Year
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 11,
+                                columnNumber: 11
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 9,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                children: "Description: "
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 14,
+                                columnNumber: 11
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                children: movie.Description
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 15,
+                                columnNumber: 11
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 13,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                        children: "Genre: "
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 17,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    children: [
+                                        "Name: ",
+                                        movie.Genre.Name
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 20,
+                                    columnNumber: 13
+                                }, undefined)
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 19,
+                                columnNumber: 11
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    children: [
+                                        "Description: ",
+                                        movie.Genre.Description
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 23,
+                                    columnNumber: 13
+                                }, undefined)
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 22,
+                                columnNumber: 11
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 18,
+                        columnNumber: 9
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 7,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                        children: "Director: "
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 28,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    children: [
+                                        "Name: ",
+                                        movie.Director.Name
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 31,
+                                    columnNumber: 13
+                                }, undefined)
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 30,
+                                columnNumber: 11
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    children: [
+                                        "Bio: ",
+                                        movie.Director.Bio
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 34,
+                                    columnNumber: 13
+                                }, undefined)
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 33,
+                                columnNumber: 11
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    children: [
+                                        "Birth Year: ",
+                                        movie.Director.BirthYear
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 37,
+                                    columnNumber: 13
+                                }, undefined)
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 36,
+                                columnNumber: 11
+                            }, undefined),
+                            movie.Director.DeathYear && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    children: [
+                                        "Death Year: ",
+                                        movie.Director.DeathYear
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 41,
+                                    columnNumber: 15
+                                }, undefined)
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 40,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    children: [
+                                        "Movies: ",
+                                        movie.Director.Movies.join(", ")
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 45,
+                                    columnNumber: 13
+                                }, undefined)
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 44,
+                                columnNumber: 11
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 29,
+                        columnNumber: 9
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 27,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                    onClick: onBackClick,
+                    children: "Back"
+                }, void 0, false, {
+                    fileName: "src/components/movie-view/movie-view.jsx",
+                    lineNumber: 50,
+                    columnNumber: 9
+                }, undefined)
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 49,
+                columnNumber: 7
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/components/movie-view/movie-view.jsx",
+        lineNumber: 3,
+        columnNumber: 5
+    }, undefined);
+};
+_c = MovieView;
+var _c;
+$RefreshReg$(_c, "MovieView");
+
+  $parcel$ReactRefreshHelpers$e9f6.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"lMrqM","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"a0jfs"}],"bwuIu":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$67b2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$67b2.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MovieCard", ()=>MovieCard);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const MovieCard = ({ movie, onClick })=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        onClick: ()=>{
+            onClick(movie);
+        },
+        children: movie.Title
+    }, void 0, false, {
+        fileName: "src/components/movie-card/movie-card.jsx",
+        lineNumber: 3,
+        columnNumber: 5
+    }, undefined);
+};
+_c = MovieCard;
+var _c;
+$RefreshReg$(_c, "MovieCard");
+
+  $parcel$ReactRefreshHelpers$67b2.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"lMrqM","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"a0jfs"}]},["2wduJ","6x7iY","d8Dch"], "d8Dch", "parcelRequireba7b")
 
 //# sourceMappingURL=index.b4b6dfad.js.map
