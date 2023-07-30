@@ -127,3 +127,6 @@ export const MainView = () => {
     </div>
   );
 }
+
+// Export the MainView component as the default export
+export default MainView;
