@@ -1,4 +1,6 @@
 export const MovieView = ({ movie, onBackClick }) => {
+  // Extract the genre name from the movie object
+  const genreName = movie.Genre.Name;
   return (
     <div>
       <div>
@@ -46,10 +48,6 @@ export const MovieView = ({ movie, onBackClick }) => {
           </li>
         </ul>
       </div>
-      <div>
-        <button onClick={onBackClick}>Back</button>
-      </div>
     </div>
   );
 };
-
