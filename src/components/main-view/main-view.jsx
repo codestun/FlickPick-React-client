@@ -77,7 +77,7 @@ export const MainView = () => {
         DeathYear: null,
         Movies: ["This Is Spinal Tap"]
       },
-      ImagePath: "https://www.filmonpaper.com/wp-content/uploads/2011/10/StopMakingSense_onesheet_USA-1-500x758.jpg",
+      ImagePath: "https://m.media-amazon.com/images/I/51zcorkCccL._SX250_SY_QL70_FMwebp_.jpg",
       Featured: false
     },
     {
