@@ -1,111 +1,89 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      Title: "Once",
-      Year: "2007",
-      Description: "A musical drama about a Dublin street musician and a Czech immigrant who form an unlikely bond through their shared love of music.",
-      Genre: {
-        Name: "Musical, Drama, Romance",
-        Description: "Blends heartfelt musical performances with a touching story of love, dreams, and the power of music."
-      },
-      Director: {
-        Name: "John Carney",
-        Bio: "John Carney is an Irish filmmaker known for his work in the music genre, including directing 'Once' and 'Sing Street.'",
-        BirthYear: 1972,
-        DeathYear: null,
-        Movies: ["Once"]
-      },
-      ImagePath: "https://images.moviesanywhere.com/5ba51ace17be67d6d9018312efef29ad/8ad4f1c6-01dd-47a5-bee1-85d444fadfa1.webp?h=375&resize=fit&w=250",
-      Featured: true
-    },
-    {
-      id: 2,
-      Title: "This Is Spinal Tap",
-      Year: "1984",
-      Description: "A mockumentary that satirizes the rock music industry, following the fictional British rock band Spinal Tap on their disastrous tour.",
-      Genre: {
-        Name: "Mockumentary, Comedy",
-        Description: "Blends documentary-style filmmaking with comedic elements, offering a humorous critique of the music industry."
-      },
-      Director: {
-        Name: "Rob Reiner",
-        Bio: "Rob Reiner is an American actor, comedian, and filmmaker known for directing 'This Is Spinal Tap' as well as other notable films, including 'Stand by Me' and 'The Princess Bride.'",
-        BirthYear: 1947,
-        DeathYear: null,
-        Movies: ["This Is Spinal Tap"]
-      },
-      ImagePath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmNxVu_dcfC0Wmr3jLCD2Thgg_lCFypVTZcUNmbvp-slkv6k_w2J29kTH14T4lioy5paM&usqp=CAU",
-      Featured: false
-    },
-    {
-      id: 3,
-      Title: "The Last Waltz",
-      Year: "1978",
-      Description: "A legendary farewell concert by The Band featuring various guest artists.",
-      Genre: {
-        Name: "Rock, Documentary",
-        Description: "Combines elements of rock music and documentary filmmaking to capture the essence of the concert."
-      },
-      Director: {
-        Name: "Martin Scorsese",
-        Bio: "Martin Scorsese is an acclaimed American filmmaker known for his contributions to the film industry. He has directed numerous iconic films, including 'Taxi Driver,' 'Goodfellas,' and 'The Departed.'",
-        BirthYear: 1942,
-        DeathYear: null,
-        Movies: ["The Last Waltz", "Shine a Light"]
-      },
-      ImagePath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaRLnkXKaZxBn6pV_aLbQqqasptxOZC6EetnGHCvTQTa-t1cSmrvZhBaaypcVsbkO4caE&usqp=CAU",
-      Featured: true
-    },
-    {
-      id: 4,
-      Title: "Stop Making Sense",
-      Year: "1984",
-      Description: "The famous music festival held in 1969, capturing the spirit of the counterculture movement.",
-      Genre: {
-        Name: "Mockumentary, Comedy",
-        Description: "Blends documentary-style filmmaking with comedic elements, offering a humorous critique of the music industry."
-      },
-      Director: {
-        Name: "Rob Reiner",
-        Bio: "Rob Reiner is an American actor, comedian, and filmmaker known for directing 'This Is Spinal Tap' as well as other notable films, including 'Stand by Me' and 'The Princess Bride.'",
-        BirthYear: 1947,
-        DeathYear: null,
-        Movies: ["This Is Spinal Tap"]
-      },
-      ImagePath: "https://m.media-amazon.com/images/I/51zcorkCccL._SX250_SY_QL70_FMwebp_.jpg",
-      Featured: false
-    },
-    {
-      id: 5,
-      Title: "Woodstock",
-      Year: "1970",
-      Description: "An iconic live performance by Talking Heads, known for its innovative staging and energetic performances.",
-      Genre: {
-        Name: "Documentary, Music",
-        Description: "Combines the documentary format with live music performances, providing a comprehensive experience of the festival."
-      },
-      Director: {
-        Name: "Michael Wadleigh",
-        Bio: "Michael Wadleigh is an American filmmaker best known for directing the documentary film 'Woodstock,' which documented the iconic music festival.",
-        BirthYear: 1942,
-        DeathYear: null,
-        Movies: ["Woodstock"]
-      },
-      ImagePath: "https://images.moviesanywhere.com/cdf5f1c926839b792d61b01827117487/c4d26fe8-cfe4-4658-b445-c9ceb26a204e.webp?h=375&resize=fit&w=250",
-      Featured: true
-    },
-  ]);
+  // State to hold the list of movies
+  const [movies, setMovies] = useState([]);
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  // State to keep track of the selected movie
+  const [selected, setSelected] = useState(null);
 
-  if (selectedMovie) {
+  // Fetch movies data from the API
+  useEffect(() => {
+    fetch("https://flickpick-1911bf3985c5.herokuapp.com/movies")
+      .then((response) => response.json())
+      .then((data) => {
+        // Map the API data into the required format
+        const moviesFromApi = data.map((movie) => ({
+          id: movie._id,
+          Title: movie.Title,
+          ImagePath: movie.ImagePath,
+          Year: movie.Year,
+          Description: movie.Description,
+          Genre: {
+            Name: movie.Genre.Name,
+            Description: movie.Genre.Description,
+          },
+          Director: {
+            Name: movie.Director.Name,
+            Bio: movie.Director.Bio,
+            BirthYear: movie.Director.BirthYear,
+            DeathYear: movie.Director.DeathYear,
+            Movies: movie.Director.Movies,
+          },
+        }));
+        // Set the movies state with the data from the API
+        setMovies(moviesFromApi);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  // Function to handle the "Back" button click and reset the selected movie state
+  const onBackClick = () => {
+    setSelected(null);
+  };
+
+  // If a movie is selected, show its details and similar movies
+  if (selected) {
+    const similarMovies = movies.filter(
+      (movie) =>
+        movie.Genre.Name === selected.Genre.Name && movie.id !== selected.id
+    );
+
     return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+      <div>
+        {/* Show the details of the selected movie */}
+        <MovieView movie={selected} onBackClick={onBackClick} />
+
+        {/* Show the "Similar Movies" section if there are similar movies */}
+        {similarMovies.length > 0 && (
+          <div>
+            <h2>Similar Movies</h2>
+            <div>
+              {/* Loop through and display similar movies */}
+              {similarMovies.map((movie) => (
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                  onClick={() => setSelected(movie)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Show a message when no similar movies are found */}
+        {similarMovies.length === 0 && <p>No similar movies found.</p>}
+        <br />
+
+        {/* Show the "Back" button */}
+        <div>
+          <button onClick={onBackClick}>Back</button>
+        </div>
+      </div>
     );
   }
 
@@ -113,17 +91,17 @@ export const MainView = () => {
     return <div>The list is empty!</div>;
   }
 
+  // If no movie is selected, show the list of all movies
   return (
     <div>
+      {/* Loop through and display all movies */}
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}
           movie={movie}
-          onClick={() => {
-            setSelectedMovie(movie);
-          }}
+          onClick={() => setSelected(movie)}
         />
       ))}
     </div>
   );
-}
+};
