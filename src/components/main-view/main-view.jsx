@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
 
 export const MainView = () => {
   // State to hold the list of movies
@@ -40,6 +41,13 @@ export const MainView = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  // Check whether a user is logged in
+  const [user, setUser] = useState(null);
+
+  if (!user) {
+    return <LoginView />;
+  }
 
   // Function to handle the "Back" button click and reset the selected movie state
   const onBackClick = () => {
