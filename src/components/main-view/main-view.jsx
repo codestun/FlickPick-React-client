@@ -4,15 +4,16 @@ import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 
 export const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
   // State to hold the list of movies
   const [movies, setMovies] = useState([]);
 
   // State to keep track of the selected movie
   const [selected, setSelected] = useState(null);
-
-  // Check whether a user is logged in
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
 
   // Fetch movies data from the API
   useEffect(() => {
@@ -21,11 +22,11 @@ export const MainView = () => {
     }
 
     fetch("https://flickpick-1911bf3985c5.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then((movies) => {
+        setMovies(movies);
         // Map the API data into the required format
         const moviesFromApi = data.map((movie) => ({
           id: movie._id,
@@ -125,7 +126,7 @@ export const MainView = () => {
           onClick={() => setSelected(movie)}
         />
       ))}
-      <button onClick={() => { setUser(null); setToken(null); }}>Logout</button>
+      <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
     </div>
   );
 };
