@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
   // State to hold the list of movies
   const [movies, setMovies] = useState([]);
 
@@ -11,11 +18,18 @@ export const MainView = () => {
 
   // Fetch movies data from the API
   useEffect(() => {
-    fetch("https://flickpick-1911bf3985c5.herokuapp.com/movies")
+    if (!token) {
+      return;
+    }
+
+    fetch("https://flickpick-1911bf3985c5.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
-      .then((data) => {
+      .then((movies) => {
+        setMovies(movies);
         // Map the API data into the required format
-        const moviesFromApi = data.map((movie) => ({
+        const moviesFromApi = movies.map((movie) => ({
           id: movie._id,
           Title: movie.Title,
           ImagePath: movie.ImagePath,
@@ -39,12 +53,27 @@ export const MainView = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [token]);
 
   // Function to handle the "Back" button click and reset the selected movie state
   const onBackClick = () => {
     setSelected(null);
   };
+
+  if (!user) {
+    return (
+      <>
+        <LoginView
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        or
+        <SignupView />
+      </>
+    );
+  }
 
   // If a movie is selected, show its details and similar movies
   if (selected) {
@@ -102,6 +131,7 @@ export const MainView = () => {
           onClick={() => setSelected(movie)}
         />
       ))}
+      <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
     </div>
   );
 };
