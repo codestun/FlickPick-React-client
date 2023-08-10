@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -28,7 +29,7 @@ export const MainView = () => {
       .then((movies) => {
         setMovies(movies);
         // Map the API data into the required format
-        const moviesFromApi = data.map((movie) => ({
+        const moviesFromApi = movies.map((movie) => ({
           id: movie._id,
           Title: movie.Title,
           ImagePath: movie.ImagePath,
@@ -61,12 +62,16 @@ export const MainView = () => {
 
   if (!user) {
     return (
-      <LoginView
-        onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }}
-      />
+      <>
+        <LoginView
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        or
+        <SignupView />
+      </>
     );
   }
 
