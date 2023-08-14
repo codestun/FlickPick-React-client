@@ -110,7 +110,12 @@ export const MainView = () => {
 
         {/* Show the "Back" button */}
         <div>
-          <button onClick={onBackClick}>Back</button>
+          <button onClick={onBackClick}
+            className="back-button"
+            style={{ cursor: "pointer" }}
+          >
+            Back
+          </button>
         </div>
       </div>
     );

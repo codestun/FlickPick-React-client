@@ -1,3 +1,5 @@
+import "./movie-view.scss";
+
 export const MovieView = ({ movie, onBackClick }) => {
   // Extract the genre name from the movie object
   const genreName = movie.Genre.Name;
