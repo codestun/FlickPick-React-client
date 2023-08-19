@@ -4,8 +4,10 @@ import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
+import Col from 'react-bootstrap/Col';
 
 export const MainView = () => {
+  // Retrieve user and token from local storage
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const [user, setUser] = useState(storedUser ? storedUser : null);
@@ -23,12 +25,13 @@ export const MainView = () => {
       return;
     }
 
+    // Fetch movies from the API using the provided token for authorization
     fetch("https://flickpick-1911bf3985c5.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((movies) => {
-        // Map the API data into the required format
+        // Transform API data into desired format
         const moviesFromApi = movies.map((movie) => ({
           id: movie._id,
           Title: movie.Title,
@@ -47,7 +50,7 @@ export const MainView = () => {
             Movies: movie.Director.Movies,
           },
         }));
-        // Set the movies state with the data from the API
+        // Update the movies state with the fetched data
         setMovies(moviesFromApi);
       })
       .catch((error) => {
@@ -60,84 +63,55 @@ export const MainView = () => {
     setSelected(null);
   };
 
-  let similarMovies = [];
-  if (selected) {
-    similarMovies = movies.filter(
-      (movie) =>
-        movie.Genre.Name === selected.Genre.Name && movie.id !== selected.id
-    );
-  }
-
   return (
     <Row>
-      {user ? (
-        selected ? (
-          <div>
-            {/* Show the details of the selected movie */}
-            <MovieView movie={selected} onBackClick={onBackClick} />
-
-            {/* Show the "Similar Movies" section if there are similar movies */}
-            {similarMovies.length > 0 && (
-              <div>
-                <h2>Similar Movies</h2>
-                <div>
-                  {/* Loop through and display similar movies */}
-                  {similarMovies.map((movie) => (
+      <Col md={12}>
+        {user ? (
+          selected ? (
+            <MovieView movie={selected} movies={movies} setSelected={setSelected} onBackClick={onBackClick} />
+          ) : (
+            <div>
+              <Row>
+                {/* Render movie cards */}
+                {movies.map((movie) => (
+                  <Col className="mb-5" key={movie.id} md={3}>
                     <MovieCard
                       key={movie.id}
                       movie={movie}
                       onClick={() => setSelected(movie)}
                     />
-                  ))}
-                </div>
-              </div>
-            )}
-            {/* Show a message when no similar movies are found */}
-            {similarMovies.length === 0 && <p>No similar movies found.</p>}
-            <br />
-            {/* Show the "Back" button */}
-            <div>
+                  </Col>
+                ))}
+              </Row>
+              {/* Show the "Logout" button */}
               <button
-                onClick={onBackClick}
-                className="back-button"
-                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setUser(null);
+                  setToken(null);
+                  localStorage.clear();
+                }}
               >
-                Back
+                Logout
               </button>
             </div>
-          </div>
+          )
         ) : (
-          <div>
-            {movies.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                onClick={() => setSelected(movie)}
+          <Row className="justify-content-center">
+            <Col md={5}>
+              {/* Show the login view */}
+              <LoginView
+                onLoggedIn={(user, token) => {
+                  setUser(user);
+                  setToken(token);
+                }}
               />
-            ))}
-            <button
-              onClick={() => {
-                setUser(null);
-                setToken(null);
-                localStorage.clear();
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        )
-      ) : (
-        <div>
-          <LoginView
-            onLoggedIn={(user, token) => {
-              setUser(user);
-              setToken(token);
-            }}
-          />
-          or
-          <SignupView />
-        </div>
-      )}
+              or
+              {/* Show the signup view */}
+              <SignupView />
+            </Col>
+          </Row>
+        )}
+      </Col>
     </Row>
   );
 };
