@@ -97,7 +97,7 @@ export const MainView = () => {
             </div>
           )
         ) : (
-          <Row className="justify-content-center">
+          <Row className="justify-content-center text-white">
             <Col md={5}>
               {/* Show the login view */}
               <LoginView
@@ -111,8 +111,9 @@ export const MainView = () => {
               <SignupView />
             </Col>
           </Row>
-        )}
-      </Col>
+        )
+        }
+      </Col >
     </Row >
   );
 };
