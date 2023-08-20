@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import Container from 'react-bootstrap/Container';
 import "./index.scss";
 import { createRoot } from 'react-dom/client';

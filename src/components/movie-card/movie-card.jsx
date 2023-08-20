@@ -5,12 +5,12 @@ import { Button, Card } from "react-bootstrap";
 // Add MovieCard function component
 export const MovieCard = ({ movie, onClick }) => {
   return (
-    <Card className="h-100">
+    <Card className="h-100 border border-primary text-bg-dark d-flex flex-column">
       <Card.Img variant="top" src={movie.ImagePath} />
-      <Card.Body>
+      <Card.Body className="flex-grow-1 d-flex flex-column">
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director.Name}</Card.Text>
-        <Button onClick={() => onClick(movie)} variant="link">
+        <Button classname="btn-link" onClick={() => onClick(movie)} variant="link">
           Open
         </Button>
       </Card.Body>

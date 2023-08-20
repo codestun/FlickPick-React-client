@@ -40,10 +40,12 @@ export const SignupView = () => {
         <Form.Label>Name:</Form.Label>
         <Form.Control
           type="text"
+          placeholder="Enter your Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
           minLength="3"
+          className="placeholder-color text-white"
         />
       </Form.Group>
 
@@ -51,9 +53,11 @@ export const SignupView = () => {
         <Form.Label>Password:</Form.Label>
         <Form.Control
           type="password"
+          placeholder="Enter your Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className="placeholder-color text-white"
         />
       </Form.Group>
 
@@ -61,9 +65,11 @@ export const SignupView = () => {
         <Form.Label>Email:</Form.Label>
         <Form.Control
           type="email"
+          placeholder="Enter your Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="placeholder-color text-white"
         />
       </Form.Group>
 
@@ -71,13 +77,15 @@ export const SignupView = () => {
         <Form.Label>Birthday:</Form.Label>
         <Form.Control
           type="birthday"
+          placeholder="Enter your Birthday"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
           required
+          className="placeholder-color text-white"
         />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
+      <Button className="btn-submit" type="submit">
         Submit
       </Button>
     </Form >

@@ -20,7 +20,7 @@ export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
           <div>
             <img className="w-100" src={movie.ImagePath} alt={movie.Title} />
           </div>
-          <div>
+          <div className="white-text">
             <h1>{movie.Title}</h1>
             <div>
               <span>Year: </span>
@@ -40,7 +40,7 @@ export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="white-text">
             <span>Director: </span>
             <ul>
               <li>
@@ -62,12 +62,12 @@ export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="white-text">
             <h2>Similar Movies</h2>
             {similarMovies.length > 0 ? (
               <Row>
                 {similarMovies.map((similarMovie) => (
-                  <Col className="mb-5" key={similarMovie.id} md={3}>
+                  <Col className="mb-5" key={similarMovie.id} xs={12} sm={8} md={6} lg={4}>
                     <MovieCard
                       key={similarMovie.id}
                       movie={similarMovie}
@@ -84,8 +84,7 @@ export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
             <div>
               <button
                 onClick={onBackClick}
-                className="back-button"
-                style={{ cursor: "pointer" }}
+                className="btn btn-back"
               >
                 Back
               </button>
