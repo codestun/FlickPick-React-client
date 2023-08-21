@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 export const SignupView = () => {
   const [name, setName] = useState("");
@@ -33,45 +35,59 @@ export const SignupView = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formName">
+        <Form.Label>Name:</Form.Label>
+        <Form.Control
           type="text"
+          placeholder="Enter your Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
           minLength="3"
+          className="placeholder-color text-white"
         />
-      </label>
-      <label>
-        Password:
-        <input
+      </Form.Group>
+
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
           type="password"
+          placeholder="Enter your Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className="placeholder-color text-white"
         />
-      </label>
-      <label>
-        Email:
-        <input
+      </Form.Group>
+
+      <Form.Group controlId="formEmail">
+        <Form.Label>Email:</Form.Label>
+        <Form.Control
           type="email"
+          placeholder="Enter your Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="placeholder-color text-white"
         />
-      </label>
-      <label>
-        Birthday:
-        <input
-          type="date"
+      </Form.Group>
+
+      <Form.Group controlId="formBirthday">
+        <Form.Label>Birthday:</Form.Label>
+        <Form.Control
+          type="birthday"
+          placeholder="Enter your Birthday"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
           required
+          className="placeholder-color text-white"
         />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+      </Form.Group>
+
+      <Button className="btn-submit" type="submit">
+        Submit
+      </Button>
+    </Form >
   );
 };

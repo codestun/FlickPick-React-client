@@ -3,3 +3,11 @@ $color: steelblue;
 .flickpick {
   color: $color;
 }
+
+$body: #bdc1c6;
+$primary: rgb(189, 193, 198);
+$danger: rgb(229, 9, 20);
+$body-bg: black;
+
+
+@import '~bootstrap/scss/bootstrap.scss';

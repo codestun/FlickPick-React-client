@@ -23,4 +23,4 @@ existing server-side code (REST API and database).
 
 create a src folder in project directory with three files: index.jsx, index.scss, index.html
 
-run `parcel src/index.html` in terminal to begin parcel build
+run `parcel src/index.html --no-cache` in terminal to begin parcel build
