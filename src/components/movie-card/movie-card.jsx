@@ -1,6 +1,7 @@
 // Import PropTypes library
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 // Add MovieCard function component
 export const MovieCard = ({ movie, onClick }) => {
@@ -10,11 +11,11 @@ export const MovieCard = ({ movie, onClick }) => {
       <Card.Body className="flex-grow-1 d-flex flex-column">
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director.Name}</Card.Text>
-        <Button classname="btn-link" onClick={() => onClick(movie)} variant="link">
-          Open
-        </Button>
+        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+          <Button className="btn-link" variant="link">Open</Button>
+        </Link>
       </Card.Body>
-    </Card>
+    </Card >
   );
 };
 

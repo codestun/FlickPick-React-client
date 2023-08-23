@@ -1,10 +1,15 @@
-import React from "react";
+import { useParams, Link } from "react-router-dom";
 import "./movie-view.scss";
 import Col from 'react-bootstrap/Col';
 import Row from "react-bootstrap/Row";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+
+  // Find the selected movie from the movies array using the movieId
+  const movie = movies.find((m) => m.id === movieId);
+
   // Extract the genre name from the movie object
   const genreName = movie.Genre.Name;
 
@@ -33,7 +38,7 @@ export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
             <span>Genre: </span>
             <ul>
               <li>
-                <span>Name: {movie.Genre.Name}</span>
+                <span>Name: {genreName}</span>
               </li>
               <li>
                 <span>Description: {movie.Genre.Description}</span>
@@ -71,7 +76,6 @@ export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
                     <MovieCard
                       key={similarMovie.id}
                       movie={similarMovie}
-                      onClick={() => setSelected(similarMovie)}
                     />
                   </Col>
                 ))}
@@ -82,12 +86,9 @@ export const MovieView = ({ movie, movies, setSelected, onBackClick }) => {
             <br />
             {/* Show the "Back" button */}
             <div>
-              <button
-                onClick={onBackClick}
-                className="btn btn-back"
-              >
-                Back
-              </button>
+              <Link to={`/`}>
+                <button className="btn btn-back">Back</button>
+              </Link>
             </div>
           </div>
         </div>

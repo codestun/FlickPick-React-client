@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
+import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
+
 
 export const MainView = () => {
   // Retrieve user and token from local storage
@@ -64,56 +66,62 @@ export const MainView = () => {
   };
 
   return (
-    <Row>
-      <Col md={12}>
-        {user ? (
-          selected ? (
-            <MovieView movie={selected} movies={movies} setSelected={setSelected} onBackClick={onBackClick} />
+    <BrowserRouter>
+      {/* Row for centering content */}
+      <Row className="justify-content-md-center white-text">
+        <Routes>
+          {/* Route for the signup view */}
+          <Route path="/signup" element={user ? <Navigate to="/" /> : <Col md={5}><SignupView /></Col>} />
+          {/* Route for the login view */}
+          <Route path="/login" element={user ? <Navigate to="/" /> : <Col md={5}><LoginView onLoggedIn={user => setUser(user)} /></Col>} />
+          {/* Route for individual movie view */}
+          <Route path="/movies/:movieId" element={user ? (
+            movies.length === 0 ? <Col>The list is empty!</Col> : (
+              <Col md={8}>
+                {/* Pass the movie prop to the MovieView component */}
+                <MovieView movie={selected} movies={movies} onBackClick={onBackClick} />
+              </Col>
+            )
           ) : (
-            <div>
-              <Row>
+            <Navigate to="/login" replace />
+          )} />
+          {/* Route for the main movie list */}
+          <Route path="/" element={user ? (
+            movies.length === 0 ? <Col className="white-text">The list is empty!</Col> : (
+              <>
                 {/* Render movie cards */}
-                {movies.map((movie) => (
-                  <Col className="mb-5" key={movie.id} xs={12} sm={6} md={4} lg={3}>
-                    <MovieCard
-                      key={movie.id}
-                      movie={movie}
-                      onClick={() => setSelected(movie)}
-                    />
+                <Row>
+                  {movies.map(movie => (
+                    <Col className="mb-4" key={movie.id} md={3}>
+                      {/* Pass movie object to the MovieCard component */}
+                      <MovieCard movie={movie} onClick={() => setSelected(movie)} />
+                    </Col>
+                  ))}
+                </Row>
+                {/* Show the "Logout" button */}
+                <Row>
+                  <Col md={2}>
+                    {/* Use Link component to navigate to /login and clear data */}
+                    <Link
+                      to="/login"
+                      onClick={() => {
+                        setUser(null);
+                        setToken(null);
+                        localStorage.clear();
+                      }}
+                      className="btn btn-danger"
+                    >
+                      Logout
+                    </Link>
                   </Col>
-                ))}
-              </Row>
-              {/* Show the "Logout" button */}
-              <button
-                onClick={() => {
-                  setUser(null);
-                  setToken(null);
-                  localStorage.clear();
-                }}
-                className="btn"
-              >
-                Logout
-              </button>
-            </div>
-          )
-        ) : (
-          <Row className="justify-content-center text-white">
-            <Col md={5}>
-              {/* Show the login view */}
-              <LoginView
-                onLoggedIn={(user, token) => {
-                  setUser(user);
-                  setToken(token);
-                }}
-              />
-              or
-              {/* Show the signup view */}
-              <SignupView />
-            </Col>
-          </Row>
-        )
-        }
-      </Col >
-    </Row >
+                </Row>
+              </>
+            )
+          ) : (
+            <Navigate to="/login" replace />
+          )} />
+        </Routes>
+      </Row>
+    </BrowserRouter>
   );
 };
