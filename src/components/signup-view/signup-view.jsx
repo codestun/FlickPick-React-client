@@ -37,6 +37,7 @@ export const SignupView = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formName">
+        <h1 className="mb-4">Sign Up</h1>
         <Form.Label>Name:</Form.Label>
         <Form.Control
           type="text"
@@ -76,7 +77,7 @@ export const SignupView = () => {
       <Form.Group controlId="formBirthday">
         <Form.Label>Birthday:</Form.Label>
         <Form.Control
-          type="birthday"
+          type="date"
           placeholder="Enter your Birthday"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
@@ -85,7 +86,7 @@ export const SignupView = () => {
         />
       </Form.Group>
 
-      <Button className="btn-submit" type="submit">
+      <Button className="btn-submit" variant="danger" type="submit">
         Submit
       </Button>
     </Form >

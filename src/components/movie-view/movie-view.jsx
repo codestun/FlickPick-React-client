@@ -1,4 +1,5 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import "./movie-view.scss";
 import Col from 'react-bootstrap/Col';
 import Row from "react-bootstrap/Row";
@@ -86,8 +87,8 @@ export const MovieView = ({ movies }) => {
             <br />
             {/* Show the "Back" button */}
             <div>
-              <Link to={`/`}>
-                <button className="btn btn-back">Back</button>
+              <Link to={`/`} className="btn-back">
+                Back
               </Link>
             </div>
           </div>
