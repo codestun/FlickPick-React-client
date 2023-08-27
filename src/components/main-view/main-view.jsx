@@ -3,8 +3,9 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
-import Row from "react-bootstrap/Row";
-import Col from 'react-bootstrap/Col';
+
+import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { Button, Col, Row } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 
 
@@ -20,6 +21,11 @@ export const MainView = () => {
 
   // State to keep track of the selected movie
   const [selected, setSelected] = useState(null);
+
+  const updateUser = user => {
+    setUser(user)
+    localStorage.setItem("user", JSON.stringify(user))
+  }
 
   // Fetch movies data from the API
   useEffect(() => {
@@ -67,13 +73,38 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
+      <NavigationBar
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+        }}
+        className="navbar navbar-dark bg-black"
+      />
       {/* Row for centering content */}
       <Row className="justify-content-md-center white-text">
         <Routes>
           {/* Route for the signup view */}
           <Route path="/signup" element={user ? <Navigate to="/" /> : <Col md={5}><SignupView /></Col>} />
           {/* Route for the login view */}
-          <Route path="/login" element={user ? <Navigate to="/" /> : <Col md={5}><LoginView onLoggedIn={user => setUser(user)} /></Col>} />
+          {/* <Route path="/login" element={user ? <Navigate to="/" /> : <Col md={5}><LoginView onLoggedIn={user => setUser(user)} /></Col>} /> */}
+          <Route path="/login" element={user ? <Navigate to="/" /> : <Col md={5}><LoginView onLoggedIn={user => { setUser(user); setToken(user.token); }} /></Col>} />
+
+          {/* Route for the updateUser view */}
+          <Route
+            path="/users/:name"
+            element={
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : (
+                <ProfileView
+                  movies={movies}
+                  user={user}
+                  token={token}
+                  setUser={setUser}
+                />
+              )
+            }
+          />
           {/* Route for individual movie view */}
           <Route path="/movies/:movieId" element={user ? (
             movies.length === 0 ? <Col>The list is empty!</Col> : (
