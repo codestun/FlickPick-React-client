@@ -1,15 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-function UpdateUser({ handleSubmit, handleUpdate, user }) {
-  const onUpdatedUserInfo = (data) => {
-    fetch(`https://flickpick-1911bf3985c5.herokuapp.com/users/${user._id}`, {
+function UpdateUser({ user }) {
+  const [updatedUser, setUpdatedUser] = useState({
+    Name: user.Name,
+    Password: "",
+    Email: user.Email,
+    Birthday: user.Birthday,
+  });
+
+  const handleUpdate = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "Name") {
+      setUpdatedUser({
+        Name: value,
+        Password: updatedUser.Password,
+        Email: updatedUser.Email,
+        Birthday: updatedUser.Birthday
+      });
+    } else if (name === "Password") {
+      setUpdatedUser({
+        Name: updatedUser.Name,
+        Password: value,
+        Email: updatedUser.Email,
+        Birthday: updatedUser.Birthday
+      });
+    } else if (name === "Email") {
+      setUpdatedUser({
+        Name: updatedUser.Name,
+        Password: updatedUser.Password,
+        Email: value,
+        Birthday: updatedUser.Birthday
+      });
+    } else if (name === "Birthday") {
+      setUpdatedUser({
+        Name: updatedUser.Name,
+        Password: updatedUser.Password,
+        Email: updatedUser.Email,
+        Birthday: value
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Get the token from local storage
+    const token = localStorage.getItem("token");
+
+    onUpdatedUserInfo(updatedUser, token);
+  };
+
+  const onUpdatedUserInfo = (data, token) => {
+    fetch(`https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}`, {
       method: "PUT",
-      body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json",
-        headers: { Authorization: `Bearer ${token}` },
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       },
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (response.ok) {
@@ -25,14 +75,15 @@ function UpdateUser({ handleSubmit, handleUpdate, user }) {
   };
 
   return (
-    <Form className="profile-form text-white" onSubmit={(e) => handleSubmit(e)}>
+    <Form className="profile-form text-white" onSubmit={handleSubmit}>
       <Form.Group>
         <h4> Update information</h4>
         <Form.Label>Name:</Form.Label>
         <Form.Control
+          name="Name"
           type="text"
           defaultValue={user.Name}
-          onChange={(e) => handleUpdate(e)}
+          onChange={handleUpdate}
           required
           placeholder="Enter a Name"
         />
@@ -40,9 +91,10 @@ function UpdateUser({ handleSubmit, handleUpdate, user }) {
       <Form.Group>
         <Form.Label>Password</Form.Label>
         <Form.Control
+          name="Password"
           type="password"
           defaultValue=""
-          onChange={(e) => handleUpdate(e)}
+          onChange={handleUpdate}
           required
           minLength="8"
           placeholder="Your password must be 8 or more characters"
@@ -51,15 +103,25 @@ function UpdateUser({ handleSubmit, handleUpdate, user }) {
       <Form.Group>
         <Form.Label>Email</Form.Label>
         <Form.Control
+          name="Email"
           type="email"
           defaultValue={user.Email}
-          onChange={(e) => handleUpdate(e)}
+          onChange={handleUpdate}
           required
           placeholder="Enter your email address"
         />
       </Form.Group>
-      <Button className="btn btn-submit" variant="primary" type="submit"
-        onClick={handleSubmit}>
+      <Form.Group>
+        <Form.Label>Birthday</Form.Label>
+        <Form.Control
+          name="Birthday"
+          type="date"
+          defaultValue={user.Birthday.split('T')[0]}
+          onChange={handleUpdate}
+          required
+        />
+      </Form.Group>
+      <Button className="btn btn-submit" variant="danger" type="submit">
         Update
       </Button>
     </Form>
