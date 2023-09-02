@@ -80,7 +80,13 @@ export const MainView = () => {
   return (
     <BrowserRouter>
       <Row className="main-view justify-content-md-center">
-        <NavigationBar user={user} />
+        <NavigationBar
+          user={user}
+          onLoggedOut={() => {
+            setUser(null);
+            setToken(null);
+          }}
+        />
         <Routes>
           // Route for the Signup View
           <Route path="/signup" element={<Col md={5}><SignupView /></Col>} />
