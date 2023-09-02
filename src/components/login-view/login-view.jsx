@@ -7,7 +7,7 @@ export const LoginView = ({ onLoggedIn }) => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
-    // this prevents the default behavior of the form which is to reload the entire page
+    // This prevents the default behavior of the form which is to reload the entire page
     event.preventDefault();
 
     const data = {
@@ -28,7 +28,7 @@ export const LoginView = ({ onLoggedIn }) => {
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
-          onLoggedIn(data.user, data.token);
+          onLoggedIn(data.user, data.token); // Notify the parent component of the successful login
         } else {
           alert("No such user");
         }
@@ -69,6 +69,6 @@ export const LoginView = ({ onLoggedIn }) => {
       <Button className="btn-submit" variant="danger" type="submit">
         Submit
       </Button>
-    </Form >
+    </Form>
   );
 };
