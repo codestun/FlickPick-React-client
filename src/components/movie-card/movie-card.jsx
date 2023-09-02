@@ -11,7 +11,7 @@ export const MovieCard = ({ movie, onClick }) => {
       <Card.Body className="flex-grow-1 d-flex flex-column">
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director.Name}</Card.Text>
-        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+        <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
           <Button className="btn-link" variant="link">Open</Button>
         </Link>
       </Card.Body>
@@ -35,8 +35,7 @@ MovieCard.propTypes = {
       Bio: PropTypes.string.isRequired,
       BirthYear: PropTypes.number,
       DeathYear: PropTypes.number,
-      Movies: PropTypes.arrayOf(PropTypes.string).isRequired,
+      Movies: PropTypes.arrayOf(PropTypes.string).isRequired
     }).isRequired,
   }).isRequired,
-  onClick: PropTypes.func.isRequired
 };

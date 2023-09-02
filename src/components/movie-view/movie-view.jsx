@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./movie-view.scss";
 import Col from 'react-bootstrap/Col';
@@ -9,14 +9,18 @@ export const MovieView = ({ movies }) => {
   const { movieId } = useParams();
 
   // Find the selected movie from the movies array using the movieId
-  const movie = movies.find((m) => m.id === movieId);
+  const movie = movies.find((m) => m._id === movieId);
 
+  // Check if movie exists
+  if (!movie) {
+    return <div>Movie not found</div>;
+  }
   // Extract the genre name from the movie object
   const genreName = movie.Genre.Name;
 
   // Filter similar movies
   const similarMovies = movies.filter(
-    (m) => m.Genre.Name === genreName && m.id !== movie.id
+    (m) => m.Genre.Name === genreName && m._id !== movie._id
   );
 
   return (
@@ -73,9 +77,9 @@ export const MovieView = ({ movies }) => {
             {similarMovies.length > 0 ? (
               <Row>
                 {similarMovies.map((similarMovie) => (
-                  <Col className="mb-5" key={similarMovie.id} xs={12} sm={8} md={6} lg={4}>
+                  <Col className="mb-5" key={similarMovie._id} xs={12} sm={8} md={6} lg={4}>
                     <MovieCard
-                      key={similarMovie.id}
+                      key={similarMovie._id}
                       movie={similarMovie}
                     />
                   </Col>
