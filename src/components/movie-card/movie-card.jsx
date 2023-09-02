@@ -1,25 +1,58 @@
-// Import PropTypes library
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-// Add MovieCard function component
-export const MovieCard = ({ movie, onClick }) => {
+// MovieCard component to display individual movies in a card format
+export const MovieCard = ({ movie }) => {
+  // Retrieve user details and token from local storage
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
+
+  // Function to add a movie to user's favorites
+  const handleFavorite = (_id) => {
+    let url = `https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}/movies/${_id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+      })
+      .then(data => {
+        console.log("Movie added to favorites:", data);
+        console.log("User's favorite movies:", data.FavoriteMovies);
+      })
+      .catch(error => {
+        console.error("Error adding movie to favorites:", error);
+        alert("Movie might already be in your favorites or an error occurred.");
+      });
+  };
+
   return (
     <Card className="h-100 border border-primary text-bg-dark d-flex flex-column">
-      <Card.Img variant="top" src={movie.ImagePath} />
+      {/* Movie image that acts as a link to detailed view */}
+      <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+        <Card.Img variant="top" src={movie.ImagePath} />
+      </Link>
       <Card.Body className="flex-grow-1 d-flex flex-column">
+        {/* Movie title */}
         <Card.Title>{movie.Title}</Card.Title>
+        {/* Director's name */}
         <Card.Text>{movie.Director.Name}</Card.Text>
-        <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
-          <Button className="btn-link" variant="link">Open</Button>
-        </Link>
+        {/* Button to add movie to favorites */}
+        <Button variant="secondary" onClick={() => handleFavorite(movie._id)}>
+          Favorite
+        </Button>
       </Card.Body>
-    </Card >
+    </Card>
   );
 };
 
-// Define all the props constraints for the MovieCard
+// PropTypes for type checking and ensuring required data is provided
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     ImagePath: PropTypes.string,
