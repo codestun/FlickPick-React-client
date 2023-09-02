@@ -4,45 +4,46 @@ import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from "../profile-view/profile-view";
-
 import { NavigationBar } from "../navigation-bar/navigation-bar";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
-
 
 export const MainView = () => {
   // Retrieve user and token from local storage
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
 
-  // State to hold the list of movies
-  const [movies, setMovies] = useState([]);
+  // State variables
+  const [user, setUser] = useState(storedUser);   // State for the current user
+  const [token, setToken] = useState(storedToken); // State for the user's token
+  const [movies, setMovies] = useState([]);   // State to hold the list of movies
+  const [selected, setSelected] = useState(null);   // State to keep track of the selected movie
 
-  // State to keep track of the selected movie
-  const [selected, setSelected] = useState(null);
-
-  const updateUser = user => {
-    setUser(user)
-    localStorage.setItem("user", JSON.stringify(user))
-  }
-
-  // Fetch movies data from the API
+  // Effect hook to fetch movies when the component mounts or when `token` changes
   useEffect(() => {
-    if (!token) {
-      return;
-    }
+    if (!token) return;
 
-    // Fetch movies from the API using the provided token for authorization
     fetch("https://flickpick-1911bf3985c5.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
     })
-      .then((response) => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((movies) => {
+        // Log the movie details
+        console.log("API Response:", movies);
+        movies.forEach(movie => {
+          console.log(`Director details for movie '${movie.Title}':`, movie.Director);
+        });
         // Transform API data into desired format
         const moviesFromApi = movies.map((movie) => ({
-          id: movie._id,
+          _id: movie._id,
           Title: movie.Title,
           ImagePath: movie.ImagePath,
           Year: movie.Year,
@@ -56,14 +57,13 @@ export const MainView = () => {
             Bio: movie.Director.Bio,
             BirthYear: movie.Director.BirthYear,
             DeathYear: movie.Director.DeathYear,
-            Movies: movie.Director.Movies,
+            Movies: movie.Director.Movies
           },
         }));
-        // Update the movies state with the fetched data
         setMovies(moviesFromApi);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching movies:", error);
       });
   }, [token]);
 
@@ -72,41 +72,38 @@ export const MainView = () => {
     setSelected(null);
   };
 
+  // Loading state for when movies have not been fetched yet
+  if (!movies.length) {
+    return <div>Loading movies...</div>;
+  }
+
   return (
     <BrowserRouter>
-      <NavigationBar
-        user={user}
-        onLoggedOut={() => {
-          setUser(null);
-        }}
-        className="navbar navbar-dark bg-black"
-      />
-      {/* Row for centering content */}
-      <Row className="justify-content-md-center white-text">
+      <Row className="main-view justify-content-md-center">
+        <NavigationBar user={user} />
         <Routes>
-          {/* Route for the signup view */}
-          <Route path="/signup" element={user ? <Navigate to="/" /> : <Col md={5}><SignupView /></Col>} />
-          {/* Route for the login view */}
-          {/* <Route path="/login" element={user ? <Navigate to="/" /> : <Col md={5}><LoginView onLoggedIn={user => setUser(user)} /></Col>} /> */}
-          <Route path="/login" element={user ? <Navigate to="/" /> : <Col md={5}><LoginView onLoggedIn={user => { setUser(user); setToken(user.token); }} /></Col>} />
+          // Route for the Signup View
+          <Route path="/signup" element={<Col md={5}><SignupView /></Col>} />
 
-          {/* Route for the updateUser view */}
+          // Route for the Login View. If the user is already logged in, navigate to the main page
           <Route
-            path="/users/:name"
+            path="/login"
             element={
-              !user ? (
-                <Navigate to="/login" replace />
-              ) : (
-                <ProfileView
-                  movies={movies}
-                  user={user}
-                  token={token}
-                  setUser={setUser}
-                />
-              )
+              user ?
+                <Navigate to="/" /> :
+                <Col md={5}>
+                  <LoginView onLoggedIn={(userData, token) => {
+                    setUser(userData);
+                    setToken(token);
+                  }} />
+                </Col>
             }
           />
-          {/* Route for individual movie view */}
+
+          // Route for the User Profile View. Redirect to Login if the user is not authenticated
+          <Route path="/users/:name" element={user ? <Col md={8}><ProfileView user={user} movies={movies} onBackClick={onBackClick} /></Col> : <Navigate to="/login" replace />} />
+
+          // Route for individual movie view
           <Route path="/movies/:movieId" element={user ? (
             movies.length === 0 ? <Col>The list is empty!</Col> : (
               <Col md={8}>
@@ -117,16 +114,17 @@ export const MainView = () => {
           ) : (
             <Navigate to="/login" replace />
           )} />
-          {/* Route for the main movie list */}
+
+          // Route for the main movie list
           <Route path="/" element={user ? (
             movies.length === 0 ? <Col className="white-text">The list is empty!</Col> : (
               <>
                 {/* Render movie cards */}
                 <Row>
                   {movies.map(movie => (
-                    <Col className="mb-4" key={movie.id} md={3}>
+                    <Col className="mb-4" key={movie._id} md={3}>
                       {/* Pass movie object to the MovieCard component */}
-                      <MovieCard movie={movie} onClick={() => setSelected(movie)} />
+                      <MovieCard movie={movie} />
                     </Col>
                   ))}
                 </Row>
