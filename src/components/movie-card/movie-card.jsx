@@ -4,15 +4,21 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 // MovieCard component to display individual movies in a card format
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, favoriteMovies }) => {
   // Retrieve user details and token from local storage
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
-  const [isFavorite, setIsFavorite] = useState(false); // State to check if movie is added to favorites
+  const isMovieFavorite = favoriteMovies?.includes(movie._id);
+  const [isFavorite, setIsFavorite] = useState(isMovieFavorite); // State to check if movie is added to favorites
 
 
   // Function to add a movie to user's favorites
   const handleFavorite = (_id) => {
+    if (isFavorite) {
+      alert("This movie is already in your favorites.");
+      return;
+    }
+
     let url = `https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}/movies/${_id}`;
     fetch(url, {
       method: "POST",
@@ -42,7 +48,7 @@ export const MovieCard = ({ movie }) => {
       <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
         <Card.Img variant="top" src={movie.ImagePath} />
       </Link>
-      <Card.Body className="flex-grow-1 d-flex flex-column">
+      <Card.Body className="d-flex flex-column justify-content-between">
         {/* Movie title */}
         <Card.Title>{movie.Title}</Card.Title>
         {/* Director's name */}
