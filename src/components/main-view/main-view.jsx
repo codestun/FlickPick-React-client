@@ -19,7 +19,7 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);   // State to hold the list of movies
   const [selected, setSelected] = useState(null);   // State to keep track of the selected movie
 
-  // Effect hook to fetch movies when the component mounts or when `token` changes
+  // Only fetch movies if I have a token
   useEffect(() => {
     if (!token) return;
 
@@ -67,6 +67,43 @@ export const MainView = () => {
       });
   }, [token]);
 
+  if (!token) {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={
+            <>
+              <NavigationBar user={null} onLoggedOut={() => {
+                setUser(null);
+                setToken(null);
+                localStorage.clear();
+              }} />
+              <Col md={5} className="mx-auto">
+                <LoginView onLoggedIn={(userData, token) => {
+                  setUser(userData);
+                  setToken(token);
+                }} />
+              </Col>
+            </>
+          } />
+          <Route path="/signup" element={
+            <>
+              <NavigationBar user={null} onLoggedOut={() => {
+                setUser(null);
+                setToken(null);
+                localStorage.clear();
+              }} />
+              <Col md={5} className="mx-auto">
+                <SignupView />
+              </Col>
+            </>
+          } />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
+
   // Function to handle the "Back" button click and reset the selected movie state
   const onBackClick = () => {
     setSelected(null);
@@ -74,7 +111,7 @@ export const MainView = () => {
 
   // Loading state for when movies have not been fetched yet
   if (!movies.length) {
-    return <div>Loading movies...</div>;
+    return <div className="text-white">Loading movies...</div>;
   }
 
   return (
@@ -123,7 +160,9 @@ export const MainView = () => {
 
           // Route for the main movie list
           <Route path="/" element={user ? (
-            movies.length === 0 ? <Col className="white-text">The list is empty!</Col> : (
+            movies.length === 0 ? (
+              <Col className="white-text">The list is empty!</Col>
+            ) : (
               <>
                 {/* Render movie cards */}
                 <Row>
