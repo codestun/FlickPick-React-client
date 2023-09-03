@@ -107,7 +107,7 @@ export const MainView = () => {
           />
 
           // Route for the User Profile View. Redirect to Login if the user is not authenticated
-          <Route path="/users/:name" element={user ? <Col md={8}><ProfileView user={user} movies={movies} onBackClick={onBackClick} /></Col> : <Navigate to="/login" replace />} />
+          <Route path="/users/:name" element={user ? <Col md={8}><ProfileView movies={movies} onBackClick={onBackClick} /></Col> : <Navigate to="/login" replace />} />
 
           // Route for individual movie view
           <Route path="/movies/:movieId" element={user ? (
