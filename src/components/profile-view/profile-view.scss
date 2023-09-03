@@ -29,4 +29,13 @@
 
 .card {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

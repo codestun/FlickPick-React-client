@@ -75,7 +75,7 @@ function UpdateUser({ user }) {
   };
 
   return (
-    <Form className="profile-form text-white" onSubmit={handleSubmit}>
+    <Form className="text-white" onSubmit={handleSubmit}>
       <Form.Group>
         <h4> Update information</h4>
         <Form.Label>Name:</Form.Label>
@@ -86,6 +86,7 @@ function UpdateUser({ user }) {
           onChange={handleUpdate}
           required
           placeholder="Enter a Name"
+          className="placeholder-color text-white"
         />
       </Form.Group>
       <Form.Group>
@@ -98,6 +99,7 @@ function UpdateUser({ user }) {
           required
           minLength="8"
           placeholder="Your password must be 8 or more characters"
+          className="placeholder-color text-white"
         />
       </Form.Group>
       <Form.Group>
@@ -109,6 +111,7 @@ function UpdateUser({ user }) {
           onChange={handleUpdate}
           required
           placeholder="Enter your email address"
+          className="placeholder-color text-white"
         />
       </Form.Group>
       <Form.Group>
@@ -119,6 +122,7 @@ function UpdateUser({ user }) {
           defaultValue={user.Birthday.split('T')[0]}
           onChange={handleUpdate}
           required
+          className="placeholder-color text-white"
         />
       </Form.Group>
       <Button className="btn btn-submit" variant="danger" type="submit">

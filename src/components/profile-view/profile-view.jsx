@@ -44,7 +44,7 @@ export const ProfileView = ({ movies = [] }) => {
 
   // If the user data hasn't loaded yet, display a loading message
   if (!user) {
-    return <div>Loading user information...</div>;
+    return <div className="text-white">Loading user information...</div>;
   }
 
   // Filter the list of movies to get only the user's favorite movies
