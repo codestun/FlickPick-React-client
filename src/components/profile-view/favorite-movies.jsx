@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Card, Col, Figure, Row } from "react-bootstrap";
 import "./profile-view.scss";
 
-function FavoriteMovies({ favoriteMovieList, movies }) {
+function FavoriteMovies({ favoriteMovieList, onUserToUpdate }) {
   console.log("User's favorite movie IDs:", favoriteMovieList.map(movie => movie._id));
 
   const removeFav = (_id) => {
@@ -23,6 +23,8 @@ function FavoriteMovies({ favoriteMovieList, movies }) {
         return response.json();
       })
       .then(data => {
+        //tell the parent component to fetch the user info again
+        onUserToUpdate();
         console.log("Movie removed from favorites:", data);
       })
       .catch(error => {
