@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -7,6 +8,8 @@ export const MovieCard = ({ movie }) => {
   // Retrieve user details and token from local storage
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
+  const [isFavorite, setIsFavorite] = useState(false); // State to check if movie is added to favorites
+
 
   // Function to add a movie to user's favorites
   const handleFavorite = (_id) => {
@@ -25,6 +28,7 @@ export const MovieCard = ({ movie }) => {
       .then(data => {
         console.log("Movie added to favorites:", data);
         console.log("User's favorite movies:", data.FavoriteMovies);
+        setIsFavorite(true); // Set movie as favorite
       })
       .catch(error => {
         console.error("Error adding movie to favorites:", error);
@@ -44,7 +48,7 @@ export const MovieCard = ({ movie }) => {
         {/* Director's name */}
         <Card.Text>{movie.Director.Name}</Card.Text>
         {/* Button to add movie to favorites */}
-        <Button variant="secondary" onClick={() => handleFavorite(movie._id)}>
+        <Button variant={isFavorite ? "danger" : "secondary"} onClick={() => handleFavorite(movie._id)}>
           Favorite
         </Button>
       </Card.Body>
