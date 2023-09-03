@@ -8,31 +8,39 @@ import "./profile-view.scss";
 // Importing Bootstrap components for layout
 import { Container, Col, Row, Card } from "react-bootstrap";
 
-export const ProfileView = ({ movies = [], user, setUser }) => {
+export const ProfileView = ({ movies = [] }) => {
+  const [user, setUser] = useState();   // State for the current user
+  const [fetchUser, setFetchUser] = useState();   // State for the current user
   // Using the useEffect hook to fetch user data when the component mounts
+  const userStored = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
+  console.log('userStored: ', userStored);
+  console.log('token: ', token);
+  // Check if there's a user and token before making the request
+  if (!userStored || !token) {
+    console.log('exiting profile view');
+    return;
+  }
   useEffect(() => {
-    // Check if there's a user and token before making the request
-    if (!user || !user.token) {
-      return;
-    }
-
     // Fetching user details from the API
-    fetch(`https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}`, {
+    fetch(`https://flickpick-1911bf3985c5.herokuapp.com/users/${userStored.Name}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`
+        Authorization: `Bearer ${token}`
       },
     })
-      .then(response => response.json())
-      .then(data => {
+      .then(response => response.json()
+      )
+      .then(userData => {
         // Update the user state with the fetched data
-        setUser(data);
+        localStorage.setItem("user", JSON.stringify(userData));
+        setUser(userData);
       })
       .catch(error => {
         console.error("Error fetching user data:", error);
       });
-  }, []); // The empty dependency array means this effect will only run once, similar to componentDidMount
+  }, [fetchUser]); // The empty dependency array means this effect will only run once, similar to componentDidMount
 
   // If the user data hasn't loaded yet, display a loading message
   if (!user) {
@@ -66,7 +74,7 @@ export const ProfileView = ({ movies = [], user, setUser }) => {
       </Row>
 
       {/* Display the user's favorite movies */}
-      <FavoriteMovies favoriteMovieList={favoriteMovieList} movies={movies} />
+      <FavoriteMovies favoriteMovieList={favoriteMovieList} onUserToUpdate={() => { setFetchUser(!fetchUser) }} />
     </Container>
   );
 }
