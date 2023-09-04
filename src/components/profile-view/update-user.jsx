@@ -12,43 +12,16 @@ function UpdateUser({ user }) {
   const handleUpdate = (e) => {
     const { name, value } = e.target;
 
-    if (name === "Name") {
-      setUpdatedUser({
-        Name: value,
-        Password: updatedUser.Password,
-        Email: updatedUser.Email,
-        Birthday: updatedUser.Birthday
-      });
-    } else if (name === "Password") {
-      setUpdatedUser({
-        Name: updatedUser.Name,
-        Password: value,
-        Email: updatedUser.Email,
-        Birthday: updatedUser.Birthday
-      });
-    } else if (name === "Email") {
-      setUpdatedUser({
-        Name: updatedUser.Name,
-        Password: updatedUser.Password,
-        Email: value,
-        Birthday: updatedUser.Birthday
-      });
-    } else if (name === "Birthday") {
-      setUpdatedUser({
-        Name: updatedUser.Name,
-        Password: updatedUser.Password,
-        Email: updatedUser.Email,
-        Birthday: value
-      });
-    }
+    setUpdatedUser(prevUser => ({
+      ...prevUser,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // Get the token from local storage
     const token = localStorage.getItem("token");
-
     onUpdatedUserInfo(updatedUser, token);
   };
 
