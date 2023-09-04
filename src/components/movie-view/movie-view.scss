@@ -18,12 +18,15 @@
 }
 
 .btn-back {
-  border: none;
+  color: #fff;
+  background-color: rgb(229, 9, 20);
+  padding: 10px 20px;
+  line-height: 24px;
+  text-decoration: none;
+  box-sizing: border-box;
+  box-shadow: rgb(0, 0, 0, .55) 0px 1px 0px 0px;
   border-radius: 4px;
-}
-
-.btn-link {
-  background-color: black;
+  margin: 15px 0;
 }
 
 .btn-submit {

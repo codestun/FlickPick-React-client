@@ -1,0 +1,41 @@
+.fav-movie {
+  margin-bottom: 15px;
+
+  figure {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: auto;
+    width: 100%;
+
+    img {
+      display: block;
+      height: 400px;
+      margin: auto;
+    }
+
+    figcaption {
+      text-align: center;
+      color: white;
+    }
+  }
+
+  button.btn {
+    display: block;
+    margin: auto
+  }
+}
+
+.card {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
