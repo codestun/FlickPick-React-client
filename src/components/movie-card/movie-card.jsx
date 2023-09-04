@@ -55,7 +55,6 @@ export const MovieCard = ({ movie, favoriteMovies, fetchUserDetails }) => {
     }
   };
 
-
   return (
     <Card className="h-100 border border-primary text-bg-dark d-flex flex-column">
       {/* Movie image that acts as a link to detailed view */}
@@ -81,7 +80,7 @@ export const MovieCard = ({ movie, favoriteMovies, fetchUserDetails }) => {
 // PropTypes for type checking and ensuring required data is provided
 MovieCard.propTypes = {
   movie: PropTypes.shape({
-    ImagePath: PropTypes.string,
+    ImagePath: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Year: PropTypes.number.isRequired,
     Description: PropTypes.string.isRequired,
