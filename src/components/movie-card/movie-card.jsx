@@ -14,34 +14,47 @@ export const MovieCard = ({ movie, favoriteMovies, fetchUserDetails }) => {
     setIsFavorite(favoriteMovies?.includes(movie._id));
   }, [favoriteMovies, movie._id]);
 
-  // Function to add a movie to user's favorites
-  const handleFavorite = (_id) => {
-    if (isFavorite) {
-      alert("This movie is already in your favorites.");
-      return;
-    }
-
+  const handleFavoriteToggle = (_id) => {
     let url = `https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}/movies/${_id}`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(response => {
-        if (!response.ok) throw new Error(response.statusText);
-        return response.json();
+
+    if (isFavorite) {
+      // If the movie is already a favorite, then make a DELETE request to remove it from favorites
+      fetch(url, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
-      .then(data => {
-        setIsFavorite(true);
-        fetchUserDetails(user.Name);
+        .then(response => {
+          if (!response.ok) throw new Error(response.statusText);
+          setIsFavorite(false); // Update the state to reflect that the movie is no longer a favorite
+          fetchUserDetails(user.Name);
+        })
+        .catch(error => {
+          console.error("Error removing movie from favorites:", error);
+          alert("Error occurred while trying to remove the movie from favorites.");
+        });
+    } else {
+      // If the movie is not a favorite, then make a POST request to add it to favorites
+      fetch(url, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
       })
-      .catch(error => {
-        console.error("Error adding movie to favorites:", error);
-        alert("Movie might already be in your favorites or an error occurred.");
-      });
+        .then(response => {
+          if (!response.ok) throw new Error(response.statusText);
+          setIsFavorite(true); // Update the state to reflect that the movie is now a favorite
+          fetchUserDetails(user.Name);
+        })
+        .catch(error => {
+          console.error("Error adding movie to favorites:", error);
+          alert("Error occurred while trying to add the movie to favorites.");
+        });
+    }
   };
+
 
   return (
     <Card className="h-100 border border-primary text-bg-dark d-flex flex-column">
@@ -55,9 +68,11 @@ export const MovieCard = ({ movie, favoriteMovies, fetchUserDetails }) => {
         {/* Director's name */}
         <Card.Text>{movie.Director.Name}</Card.Text>
         {/* Button to add movie to favorites */}
-        <Button variant={isFavorite ? "danger" : "secondary"} onClick={() => handleFavorite(movie._id)}>
-          Favorite
+        {/* Button to toggle movie favorite status */}
+        <Button variant={isFavorite ? "danger" : "secondary"} onClick={() => handleFavoriteToggle(movie._id)}>
+          {isFavorite ? "Unfavorite" : "Favorite"}
         </Button>
+
       </Card.Body>
     </Card>
   );
