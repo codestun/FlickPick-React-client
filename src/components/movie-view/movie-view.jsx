@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Row from "react-bootstrap/Row";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const MovieView = ({ movies }) => {
+export const MovieView = ({ movies, favoriteMovies, fetchUserDetails }) => {
   const { movieId } = useParams();
 
   // Find the selected movie from the movies array using the movieId
@@ -81,6 +81,8 @@ export const MovieView = ({ movies }) => {
                     <MovieCard
                       key={similarMovie._id}
                       movie={similarMovie}
+                      favoriteMovies={favoriteMovies}
+                      fetchUserDetails={fetchUserDetails}
                     />
                   </Col>
                 ))}

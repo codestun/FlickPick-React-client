@@ -167,7 +167,7 @@ export const MainView = () => {
             movies.length === 0 ? <Col>The list is empty!</Col> : (
               <Col md={8}>
                 {/* Pass the movie prop to the MovieView component */}
-                <MovieView movie={selected} movies={movies} onBackClick={onBackClick} />
+                <MovieView movie={selected} movies={movies} onBackClick={onBackClick} favoriteMovies={user.FavoriteMovies} fetchUserDetails={fetchUserDetails} />
               </Col>
             )
           ) : (
