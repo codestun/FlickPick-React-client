@@ -19,6 +19,22 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);   // State to hold the list of movies
   const [selected, setSelected] = useState(null);   // State to keep track of the selected movie
 
+  const fetchUserDetails = (username) => {
+    fetch(`https://flickpick-1911bf3985c5.herokuapp.com/users/${username}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+    })
+      .then(response => response.json())
+      .then(userData => {
+        localStorage.setItem("user", JSON.stringify(userData));
+        setUser(userData);
+      })
+      .catch(error => {
+        console.error("Error fetching user details:", error);
+      });
+  }
   // Only fetch movies if I have a token
   useEffect(() => {
     if (!token) return;
@@ -169,7 +185,7 @@ export const MainView = () => {
                   {movies.map(movie => (
                     <Col className="mb-4" key={movie._id} md={3}>
                       {/* Pass movie object to the MovieCard component */}
-                      <MovieCard movie={movie} />
+                      <MovieCard movie={movie} favoriteMovies={user.FavoriteMovies} fetchUserDetails={fetchUserDetails} />
                     </Col>
                   ))}
                 </Row>

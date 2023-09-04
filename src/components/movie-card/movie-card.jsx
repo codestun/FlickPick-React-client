@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-// MovieCard component to display individual movies in a card format
-export const MovieCard = ({ movie, favoriteMovies }) => {
+export const MovieCard = ({ movie, favoriteMovies, fetchUserDetails }) => {
   // Retrieve user details and token from local storage
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
   const isMovieFavorite = favoriteMovies?.includes(movie._id);
-  const [isFavorite, setIsFavorite] = useState(isMovieFavorite); // State to check if movie is added to favorites
+  const [isFavorite, setIsFavorite] = useState(isMovieFavorite);
 
+  useEffect(() => {
+    setIsFavorite(favoriteMovies?.includes(movie._id));
+  }, [favoriteMovies, movie._id]);
 
   // Function to add a movie to user's favorites
   const handleFavorite = (_id) => {
@@ -32,9 +34,8 @@ export const MovieCard = ({ movie, favoriteMovies }) => {
         return response.json();
       })
       .then(data => {
-        console.log("Movie added to favorites:", data);
-        console.log("User's favorite movies:", data.FavoriteMovies);
-        setIsFavorite(true); // Set movie as favorite
+        setIsFavorite(true);
+        fetchUserDetails(user.Name);
       })
       .catch(error => {
         console.error("Error adding movie to favorites:", error);
@@ -81,4 +82,6 @@ MovieCard.propTypes = {
       Movies: PropTypes.arrayOf(PropTypes.string).isRequired
     }).isRequired,
   }).isRequired,
+  favoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchUserDetails: PropTypes.func.isRequired
 };
