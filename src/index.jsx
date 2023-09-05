@@ -1,4 +1,6 @@
 import { createRoot } from "react-dom/client";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 
 import { MainView } from "./components/main-view/main-view";
 import Container from 'react-bootstrap/Container';
@@ -6,10 +8,12 @@ import "./index.scss";
 
 const FlickPickApplication = () => {
   return (
-    <Container>
-      <MainView />
-    </Container>
-  )
+    <Provider store={store} >
+      <Container>
+        <MainView />
+      </Container>
+    </Provider>
+  );
 };
 
 // Finds the root of your app
