@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import "./movie-view.scss";
 import Col from 'react-bootstrap/Col';
