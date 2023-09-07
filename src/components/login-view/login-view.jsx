@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { setUser } from "../../redux/reducers/user";
+import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     // This prevents the default behavior of the form which is to reload the entire page
@@ -28,13 +31,14 @@ export const LoginView = ({ onLoggedIn }) => {
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
-          onLoggedIn(data.user, data.token); // Notify the parent component of the successful login
+          onLoggedIn(data.user, data.token);
+          dispatch(setUser(data.user));
         } else {
           alert("No such user");
         }
       })
       .catch((e) => {
-        alert("Something went wrong");
+        alert(`Error: ${e.message}`);
       });
   };
 
