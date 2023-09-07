@@ -1,5 +1,6 @@
 // Importing necessary React hooks and components
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import UserInfo from "./user-info";
 import FavoriteMovies from "./favorite-movies";
 import UpdateUser from "./update-user";
@@ -11,6 +12,7 @@ import { Container, Col, Row, Card } from "react-bootstrap";
 export const ProfileView = ({ movies = [] }) => {
   const [user, setUser] = useState();   // State for the current user
   const [fetchUser, setFetchUser] = useState();   // State for the current user
+  const dispatch = useDispatch();
   // Using the useEffect hook to fetch user data when the component mounts
   const userStored = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
@@ -36,6 +38,8 @@ export const ProfileView = ({ movies = [] }) => {
         // Update the user state with the fetched data
         localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
+        // Update the Redux store with the user data
+        dispatch(setUser(userData));
       })
       .catch(error => {
         console.error("Error fetching user data:", error);
