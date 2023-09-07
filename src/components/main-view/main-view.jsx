@@ -12,7 +12,7 @@ import { Col, Row } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 
 export const MainView = () => {
-  const movies = useSelector((state) => state.movies);  // State to hold the list of movies
+  const movies = useSelector((state) => state.movies); // State to hold the list of movies
   const user = useSelector((state) => state.user); // State for the current user
   const dispatch = useDispatch(); // <-- This line initializes the dispatch function
   // Retrieve user and token from local storage
@@ -58,11 +58,6 @@ export const MainView = () => {
         return response.json();
       })
       .then((movies) => {
-        // Log the movie details
-        console.log("API Response:", movies);
-        movies.forEach(movie => {
-          console.log(`Director details for movie '${movie.Title}':`, movie.Director);
-        });
         // Transform API data into desired format
         const moviesFromApi = movies.map((movie) => ({
           _id: movie._id,
