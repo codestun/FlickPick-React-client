@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
+import { setMovies } from "../../redux/reducers/movies";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -9,14 +12,17 @@ import { Col, Row } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 
 export const MainView = () => {
+  const movies = useSelector((state) => state.movies);  // State to hold the list of movies
+  const user = useSelector((state) => state.user); // State for the current user
+  const dispatch = useDispatch(); // <-- This line initializes the dispatch function
   // Retrieve user and token from local storage
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
 
   // State variables
-  const [user, setUser] = useState(storedUser);   // State for the current user
+  // const [user, setUser] = useState(storedUser);
   const [token, setToken] = useState(storedToken); // State for the user's token
-  const [movies, setMovies] = useState([]);   // State to hold the list of movies
+  // const [movies, setMovies] = useState([]);
   const [selected, setSelected] = useState(null);   // State to keep track of the selected movie
 
   const fetchUserDetails = (username) => {
@@ -76,7 +82,7 @@ export const MainView = () => {
             Movies: movie.Director.Movies
           },
         }));
-        setMovies(moviesFromApi);
+        dispatch(setMovies(moviesFromApi));
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
@@ -167,7 +173,7 @@ export const MainView = () => {
             movies.length === 0 ? <Col>The list is empty!</Col> : (
               <Col md={8}>
                 {/* Pass the movie prop to the MovieView component */}
-                <MovieView movie={selected} movies={movies} onBackClick={onBackClick} favoriteMovies={user.FavoriteMovies} fetchUserDetails={fetchUserDetails} />
+                <MovieView movie={selected} onBackClick={onBackClick} favoriteMovies={user.FavoriteMovies} fetchUserDetails={fetchUserDetails} />
               </Col>
             )
           ) : (
