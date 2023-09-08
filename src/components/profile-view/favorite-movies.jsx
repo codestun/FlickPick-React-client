@@ -32,6 +32,10 @@ function FavoriteMovies({ favoriteMovieList, onUserToUpdate }) {
       });
   };
 
+  if (!favoriteMovieList.length) {
+    return <div>You have no favorite movies.</div>;
+  }
+
   return (
     <Card>
       <Card.Body>
@@ -41,10 +45,9 @@ function FavoriteMovies({ favoriteMovieList, onUserToUpdate }) {
           </Col>
         </Row>
         <Row>
+
           {favoriteMovieList.map(({ ImagePath, Title, _id }) => {
-            if (!favoriteMovieList.length) {
-              return <div>You have no favorite movies.</div>;
-            }
+
             return (
               <Col xs={12} md={4} lg={4} key={_id} className="fav-movie">
                 <Figure>
