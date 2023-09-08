@@ -8,7 +8,7 @@ import { MovieCard } from "../movie-card/movie-card";
 
 export const MovieView = ({ favoriteMovies, fetchUserDetails }) => {
   const { movieId } = useParams();
-  const movies = useSelector((state) => state.movies);
+  const movies = useSelector((state) => state.movies.list);
 
   // Find the selected movie from the movies array using the movieId
   const movie = movies.find((m) => m._id === movieId);

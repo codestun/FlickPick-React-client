@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { setMovies } from "../../redux/reducers/movies";
 import { MovieCard } from "../movie-card/movie-card";
+import { MoviesList } from "../movies-list/movies-list";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
@@ -12,7 +13,7 @@ import { Col, Row } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 
 export const MainView = () => {
-  const movies = useSelector((state) => state.movies); // State to hold the list of movies
+  const movies = useSelector((state) => state.movies.list); // State to hold the list of movies
   const user = useSelector((state) => state.user); // State for the current user
   const dispatch = useDispatch(); // <-- This line initializes the dispatch function
   // Retrieve user and token from local storage
@@ -58,6 +59,7 @@ export const MainView = () => {
         return response.json();
       })
       .then((movies) => {
+        console.log("Movies from API:", movies);
         // Transform API data into desired format
         const moviesFromApi = movies.map((movie) => ({
           _id: movie._id,
@@ -127,7 +129,7 @@ export const MainView = () => {
   };
 
   // Loading state for when movies have not been fetched yet
-  if (!movies.length) {
+  if (!movies || !movies.length) {
     return <div className="text-white">Loading movies...</div>;
   }
 
@@ -176,42 +178,14 @@ export const MainView = () => {
           )} />
 
           // Route for the main movie list
-          <Route path="/" element={user ? (
-            movies.length === 0 ? (
-              <Col className="white-text">The list is empty!</Col>
-            ) : (
+          <Route
+            path="/"
+            element={
               <>
-                {/* Render movie cards */}
-                <Row>
-                  {movies.map(movie => (
-                    <Col className="mb-4" key={movie._id} md={3}>
-                      {/* Pass movie object to the MovieCard component */}
-                      <MovieCard movie={movie} favoriteMovies={user.FavoriteMovies} fetchUserDetails={fetchUserDetails} />
-                    </Col>
-                  ))}
-                </Row>
-                {/* Show the "Logout" button */}
-                <Row>
-                  <Col md={2}>
-                    {/* Use Link component to navigate to /login and clear data */}
-                    <Link
-                      to="/login"
-                      onClick={() => {
-                        setUser(null);
-                        setToken(null);
-                        localStorage.clear();
-                      }}
-                      className="btn btn-danger"
-                    >
-                      Logout
-                    </Link>
-                  </Col>
-                </Row>
+                {!user ? <Navigate to="/login" replace /> : (movies && movies.length ? <MoviesList fetchUserDetails={fetchUserDetails} /> : <div>No movies available</div>)}
               </>
-            )
-          ) : (
-            <Navigate to="/login" replace />
-          )} />
+            }
+          />
         </Routes>
       </Row>
     </BrowserRouter>
