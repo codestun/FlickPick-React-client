@@ -1,8 +1,14 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { MoviesFilter } from "../movies-filter/movies-filter";
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = ({ onLoggedOut }) => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const location = useLocation();
   return (
     <Navbar bg="navbar navbar-dark bg-black" expand="lg">
       <Container>
@@ -34,14 +40,17 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                   onClick={() => {
                     localStorage.clear();
                     onLoggedOut();
+                    dispatch(setUser(null));
                   }}>
                   Logout
                 </Nav.Link>
               </>
             )}
           </Nav>
+          {/* Conditionally render the MoviesFilter based on the current route */}
+          {location.pathname === "/" && user && <MoviesFilter />}
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </Navbar >
   );
 };

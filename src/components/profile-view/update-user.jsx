@@ -47,6 +47,33 @@ function UpdateUser({ user }) {
       });
   };
 
+  const onDeleteAccount = () => {
+    const confirmation = window.confirm("Are you sure you want to delete your account?");
+    if (!confirmation) return;
+
+    const token = localStorage.getItem("token");
+    fetch(`https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          alert("Account deleted successfully");
+          localStorage.clear();
+          // Redirect to home or login page or handle as you see fit.
+          window.location.assign('/');
+        } else {
+          alert("Failed to delete account");
+        }
+      })
+      .catch(e => {
+        console.error("Error deleting account:", e);
+      });
+  };
+
   return (
     <Form className="text-white" onSubmit={handleSubmit}>
       <Form.Group>
@@ -98,8 +125,11 @@ function UpdateUser({ user }) {
           className="placeholder-color text-white"
         />
       </Form.Group>
-      <Button className="btn btn-submit" variant="danger" type="submit">
+      <Button style={{ marginRight: '16px' }} className="btn btn-submit mr-3" variant="danger" type="submit">
         Update
+      </Button>
+      <Button className="btn btn-danger" onClick={onDeleteAccount}>
+        Delete Account
       </Button>
     </Form>
   );

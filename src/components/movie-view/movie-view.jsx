@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import "./movie-view.scss";
 import Col from 'react-bootstrap/Col';
 import Row from "react-bootstrap/Row";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const MovieView = ({ movies, favoriteMovies, fetchUserDetails }) => {
+export const MovieView = ({ favoriteMovies, fetchUserDetails }) => {
   const { movieId } = useParams();
+  const movies = useSelector((state) => state.movies.list);
 
   // Find the selected movie from the movies array using the movieId
   const movie = movies.find((m) => m._id === movieId);

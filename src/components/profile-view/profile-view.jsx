@@ -1,5 +1,8 @@
 // Importing necessary React hooks and components
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
+import { useDispatch } from "react-redux";
 import UserInfo from "./user-info";
 import FavoriteMovies from "./favorite-movies";
 import UpdateUser from "./update-user";
@@ -9,19 +12,25 @@ import "./profile-view.scss";
 import { Container, Col, Row, Card } from "react-bootstrap";
 
 export const ProfileView = ({ movies = [] }) => {
-  const [user, setUser] = useState();   // State for the current user
-  const [fetchUser, setFetchUser] = useState();   // State for the current user
+  const [user, setLocalUser] = useState(); // State for the current user
+  const [fetchUser, setFetchUser] = useState(); // State for the current user
+  const dispatch = useDispatch();
   // Using the useEffect hook to fetch user data when the component mounts
   const userStored = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
   console.log('userStored: ', userStored);
   console.log('token: ', token);
-  // Check if there's a user and token before making the request
+
   if (!userStored || !token) {
-    console.log('exiting profile view');
-    return;
+    return <div>Please login to view your profile.</div>;
   }
+
   useEffect(() => {
+    // Check if there's a user and token before making the request
+    if (!userStored || !token) {
+      console.log('exiting profile view');
+      return;
+    }
     // Fetching user details from the API
     fetch(`https://flickpick-1911bf3985c5.herokuapp.com/users/${userStored.Name}`, {
       method: "GET",
@@ -35,12 +44,14 @@ export const ProfileView = ({ movies = [] }) => {
       .then(userData => {
         // Update the user state with the fetched data
         localStorage.setItem("user", JSON.stringify(userData));
-        setUser(userData);
+        setLocalUser(userData);
+        // Update the Redux store with the user data
+        dispatch(setUser(userData));
       })
       .catch(error => {
         console.error("Error fetching user data:", error);
       });
-  }, [fetchUser]); // The empty dependency array means this effect will only run once, similar to componentDidMount
+  }, [fetchUser]);
 
   // If the user data hasn't loaded yet, display a loading message
   if (!user) {
