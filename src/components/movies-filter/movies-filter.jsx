@@ -9,9 +9,9 @@ export const MoviesFilter = () => {
 
   return (
     <Form inline className="ml-auto">
-      <Form.Control
+      <Form.Control className="text-white"
         type="text"
-        placeholder="Search..."
+        placeholder="Movie Search..."
         value={filter}
         onChange={(e) => dispatch(setFilter(e.target.value))}
         style={{ maxWidth: "200px" }}
