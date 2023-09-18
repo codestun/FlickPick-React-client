@@ -66,7 +66,6 @@ export const MovieCard = ({ movie, favoriteMovies, fetchUserDetails }) => {
         <Card.Title>{movie.Title}</Card.Title>
         {/* Director's name */}
         <Card.Text>{movie.Director.Name}</Card.Text>
-        {/* Button to add movie to favorites */}
         {/* Button to toggle movie favorite status */}
         <Button variant={isFavorite ? "danger" : "secondary"} onClick={() => handleFavoriteToggle(movie._id)}>
           {isFavorite ? "Unfavorite" : "Favorite"}

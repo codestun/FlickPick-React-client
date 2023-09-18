@@ -1,13 +1,93 @@
-$color: steelblue;
+// Import Bootstrap's SCSS
+@import '~bootstrap/scss/bootstrap.scss';
 
-.flickpick {
-  color: $color;
-}
-
+$flickpick: #e50914;
 $body: #bdc1c6;
 $primary: rgb(189, 193, 198);
-$danger: rgb(229, 9, 20);
-$body-bg: black;
 
+/* Set the background color for the entire app */
+body {
+  background-color: black;
+  color: white;
+}
 
-@import '~bootstrap/scss/bootstrap.scss';
+.flickpick {
+  color: $flickpick;
+}
+
+// Default button styles
+.flickpick-button {
+  background-color: $flickpick;
+  color: white;
+  border: $flickpick;
+  transition: background-color 0.3s, color 0.3s;
+  border-bottom-color: rgb (255, 255, 255);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: .375rem .75rem;
+  margin: 15px 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  box-shadow: rgb(0, 0, 0, .55) 0px 1px 0px 0px;
+  border-radius: 4px;
+}
+
+.flickpick-button:hover {
+  background-color: darken($flickpick, 10%);
+  opacity: 1;
+  color: white;
+}
+
+.flickpick-button:focus {
+  background-color: lighten($flickpick, 5%);
+  color: white;
+}
+
+// Button styles for active (clicked) state
+.flickpick-button:active {
+  background-color: darken($flickpick, 10%) !important;
+  color: white;
+}
+
+// Override bootstrap border opacity
+.border-primary {
+  --bs-border-opacity: none;
+}
+
+// Override bootstrap bg opacity
+.bg-dark {
+  --bs-bg-opacity: 0.2;
+}
+
+input {
+  color: white;
+}
+
+/* Override Bootstrap's input focus styles */
+input:focus {
+  border-color: white !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25) !important;
+}
+
+input::placeholder {
+  color: rgb(140, 140, 140) !important;
+}
+
+/* Prevent brand link from changing color on hover */
+.navbar-brand {
+  color: $flickpick;
+
+  &:hover,
+  &:focus {
+    color: $flickpick;
+  }
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: white;
+}

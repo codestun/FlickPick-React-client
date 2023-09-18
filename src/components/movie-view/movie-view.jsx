@@ -1,10 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
-import "./movie-view.scss";
-import Col from 'react-bootstrap/Col';
-import Row from "react-bootstrap/Row";
+import { useSelector } from "react-redux";
 import { MovieCard } from "../movie-card/movie-card";
+import { Link } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
 
 export const MovieView = ({ favoriteMovies, fetchUserDetails }) => {
   const { movieId } = useParams();
@@ -95,7 +93,7 @@ export const MovieView = ({ favoriteMovies, fetchUserDetails }) => {
             <br />
             {/* Show the "Back" button */}
             <div>
-              <Link to={`/`} className="btn-back">
+              <Link to={`/`} className="flickpick-button">
                 Back
               </Link>
             </div>

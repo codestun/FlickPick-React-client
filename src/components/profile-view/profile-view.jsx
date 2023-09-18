@@ -6,10 +6,9 @@ import { useDispatch } from "react-redux";
 import UserInfo from "./user-info";
 import FavoriteMovies from "./favorite-movies";
 import UpdateUser from "./update-user";
-import "./profile-view.scss";
-
 // Importing Bootstrap components for layout
 import { Container, Col, Row, Card } from "react-bootstrap";
+import "../../index.scss";
 
 export const ProfileView = ({ movies = [] }) => {
   const [user, setLocalUser] = useState(); // State for the current user
@@ -67,7 +66,7 @@ export const ProfileView = ({ movies = [] }) => {
     <Container>
       <Row>
         <Col xs={12} sm={4}>
-          <Card>
+          <Card className="bg-dark text-white">
             <Card.Body>
               {/* Display the user's information */}
               <UserInfo name={user.Name} email={user.Email} favoriteMovies={user.FavoriteMovies} />
@@ -75,7 +74,7 @@ export const ProfileView = ({ movies = [] }) => {
           </Card>
         </Col>
         <Col xs={12} sm={8}>
-          <Card>
+          <Card className="bg-dark text-white">
             <Card.Body>
               {/* Display the form to update the user's details */}
               <UpdateUser user={user} setUser={setUser} />

@@ -37,7 +37,7 @@ function FavoriteMovies({ favoriteMovieList, onUserToUpdate }) {
   }
 
   return (
-    <Card>
+    <Card className="bg-dark text-white">
       <Card.Body>
         <Row className="text-white">
           <Col xs={12} md={4}>
@@ -56,7 +56,7 @@ function FavoriteMovies({ favoriteMovieList, onUserToUpdate }) {
                     <Figure.Caption>{Title}</Figure.Caption>
                   </Link>
                 </Figure>
-                <Button variant="danger" onClick={() => removeFav(_id)}>
+                <Button className="flickpick-button" onClick={() => removeFav(_id)}>
                   Remove
                 </Button>
               </Col>

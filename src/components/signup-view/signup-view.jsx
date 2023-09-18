@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Button, Form } from "react-bootstrap";
 
 export const SignupView = () => {
   const [name, setName] = useState("");
@@ -37,56 +36,56 @@ export const SignupView = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formName">
-        <h1 className="mb-4 text-white">Sign Up</h1>
-        <Form.Label className="text-white">Name:</Form.Label>
+        <h1 className="mb-4">Sign Up</h1>
+        <Form.Label>Name:</Form.Label>
         <Form.Control
           type="text"
           placeholder="Enter your Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          className="bg-dark text-white"
           minLength="3"
-          className="placeholder-color text-white"
         />
       </Form.Group>
 
       <Form.Group controlId="formPassword">
-        <Form.Label className="text-white">Password:</Form.Label>
+        <Form.Label>Password:</Form.Label>
         <Form.Control
           type="password"
           placeholder="Enter your Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="placeholder-color text-white"
+          className="bg-dark text-white"
         />
       </Form.Group>
 
       <Form.Group controlId="formEmail">
-        <Form.Label className="text-white">Email:</Form.Label>
+        <Form.Label>Email:</Form.Label>
         <Form.Control
           type="email"
           placeholder="Enter your Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="placeholder-color text-white"
+          className="bg-dark text-white"
         />
       </Form.Group>
 
       <Form.Group controlId="formBirthday">
-        <Form.Label className="text-white">Birthday:</Form.Label>
+        <Form.Label >Birthday:</Form.Label>
         <Form.Control
           type="date"
           placeholder="Enter your Birthday"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
           required
-          className="placeholder-color text-white"
+          className="bg-dark text-white"
         />
       </Form.Group>
 
-      <Button className="btn-submit" variant="danger" type="submit">
+      <Button className="flickpick-button" type=" submit">
         Submit
       </Button>
     </Form >
