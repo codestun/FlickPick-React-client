@@ -15,44 +15,25 @@ export const MovieCard = ({ movie, favoriteMovies, fetchUserDetails }) => {
   }, [favoriteMovies, movie._id]);
 
   const handleFavoriteToggle = (_id) => {
-    let url = `https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}/movies/${_id}`;
+    const url = `https://flickpick-1911bf3985c5.herokuapp.com/users/${user.Name}/movies/${_id}`;
+    const method = isFavorite ? "DELETE" : "POST";
 
-    if (isFavorite) {
-      // If the movie is already a favorite, then make a DELETE request to remove it from favorites
-      fetch(url, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+    fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) throw new Error(response.statusText);
+        setIsFavorite(!isFavorite); // Toggle the state to reflect the change in favorite status
+        fetchUserDetails(user.Name);
       })
-        .then(response => {
-          if (!response.ok) throw new Error(response.statusText);
-          setIsFavorite(false); // Update the state to reflect that the movie is no longer a favorite
-          fetchUserDetails(user.Name);
-        })
-        .catch(error => {
-          console.error("Error removing movie from favorites:", error);
-          alert("Error occurred while trying to remove the movie from favorites.");
-        });
-    } else {
-      // If the movie is not a favorite, then make a POST request to add it to favorites
-      fetch(url, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then(response => {
-          if (!response.ok) throw new Error(response.statusText);
-          setIsFavorite(true); // Update the state to reflect that the movie is now a favorite
-          fetchUserDetails(user.Name);
-        })
-        .catch(error => {
-          console.error("Error adding movie to favorites:", error);
-          alert("Error occurred while trying to add the movie to favorites.");
-        });
-    }
+      .catch(error => {
+        console.error(`Error ${isFavorite ? "removing" : "adding"} movie to favorites:`, error);
+        alert(`Error occurred while trying to ${isFavorite ? "remove" : "add"} the movie to favorites.`);
+      });
   };
 
   return (
