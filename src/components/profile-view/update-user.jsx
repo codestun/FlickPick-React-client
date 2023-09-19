@@ -63,7 +63,7 @@ function UpdateUser({ user }) {
         if (response.ok) {
           alert("Account deleted successfully");
           localStorage.clear();
-          // Redirect to home or login page or handle as you see fit.
+          // Redirect to home or login page or handle as you see fit
           window.location.assign('/');
         } else {
           alert("Failed to delete account");
@@ -75,7 +75,7 @@ function UpdateUser({ user }) {
   };
 
   return (
-    <Form className="text-white" onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Form.Group>
         <h4> Update information</h4>
         <Form.Label>Name:</Form.Label>
@@ -86,7 +86,7 @@ function UpdateUser({ user }) {
           onChange={handleUpdate}
           required
           placeholder="Enter a Name"
-          className="placeholder-color text-white"
+          className="bg-dark text-white"
         />
       </Form.Group>
       <Form.Group>
@@ -99,7 +99,7 @@ function UpdateUser({ user }) {
           required
           minLength="8"
           placeholder="Your password must be 8 or more characters"
-          className="placeholder-color text-white"
+          className="bg-dark text-white"
         />
       </Form.Group>
       <Form.Group>
@@ -111,7 +111,7 @@ function UpdateUser({ user }) {
           onChange={handleUpdate}
           required
           placeholder="Enter your email address"
-          className="placeholder-color text-white"
+          className="bg-dark text-white"
         />
       </Form.Group>
       <Form.Group>
@@ -122,15 +122,17 @@ function UpdateUser({ user }) {
           defaultValue={user.Birthday.split('T')[0]}
           onChange={handleUpdate}
           required
-          className="placeholder-color text-white"
+          className="bg-dark text-white"
         />
       </Form.Group>
-      <Button style={{ marginRight: '16px' }} className="btn btn-submit mr-3" variant="danger" type="submit">
-        Update
-      </Button>
-      <Button className="btn btn-danger" onClick={onDeleteAccount}>
-        Delete Account
-      </Button>
+      <div className="mt-3">
+        <Button style={{ marginRight: '16px' }} className="flickpick-button" type="submit">
+          Update
+        </Button>
+        <Button className="flickpick-button" onClick={onDeleteAccount}>
+          Delete Account
+        </Button>
+      </div>
     </Form>
   );
 }

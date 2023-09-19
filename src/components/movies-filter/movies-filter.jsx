@@ -9,7 +9,7 @@ export const MoviesFilter = () => {
 
   return (
     <Form inline className="ml-auto">
-      <Form.Control className="text-white"
+      <Form.Control className=" bg-dark text-white"
         type="text"
         placeholder="Movie Search..."
         value={filter}

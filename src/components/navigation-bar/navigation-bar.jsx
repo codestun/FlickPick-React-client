@@ -12,7 +12,7 @@ export const NavigationBar = ({ onLoggedOut }) => {
   return (
     <Navbar bg="navbar navbar-dark bg-black" expand="lg">
       <Container>
-        <Navbar.Brand className="navbar-brand text-danger" style={{ fontSize: "38px" }} as={Link} to="/">
+        <Navbar.Brand className="navbar-brand flickpick" style={{ fontSize: "40px" }} as={Link} to="/">
           FlickPick
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
