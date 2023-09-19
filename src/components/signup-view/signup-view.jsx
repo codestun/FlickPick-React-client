@@ -53,7 +53,7 @@ export const SignupView = () => {
         <Form.Label>Password:</Form.Label>
         <Form.Control
           type="password"
-          placeholder="Enter your Password"
+          placeholder="Your password must be 8 or more characters"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
